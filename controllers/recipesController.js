@@ -64,4 +64,37 @@ module.exports = {
       .then(dbModel => res.json(dbModel))
       .catch(err => res.status(422).json(err));
   },
+  incrementlikes: function(req, res) {
+    db.Recipe.findById(req.params.id)
+      .then(recipe => {
+        if (!recipe) {
+          return res.status(404).send({ error: 'Recipe not found' });
+        }
+
+        recipe.likes += 1;
+
+        return recipe.save();
+      })
+      .then(updatedRecipe => {
+        res.status(200).json({ likes: updatedRecipe.likes });
+      })
+      .catch(err => {
+        console.error(err);
+        res.status(500).send({ error: 'Server error' });
+      });
+  },
+  getLikeCount: function(req, res) {
+    db.Recipe.findById(req.params.id)
+      .then(recipe => {
+        if (!recipe) {
+          return res.status(404).send({ error: 'Recipe not found' });
+        }
+        
+        res.status(200).json({ likes: recipe.likes });
+      })
+      .catch(err => {
+        console.error(err);
+        res.status(500).send({ error: 'Server error' });
+      });
+  }  
 };

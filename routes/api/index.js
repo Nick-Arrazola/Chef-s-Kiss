@@ -13,3 +13,31 @@ router.use("/recipes", recipeRoutes);
 router.use("/images", imageRoutes);
 
 module.exports = router;
+
+// const express = require("express");
+// const router = express.Router();
+// const Recipe = require("./recipes");
+
+// // Add a new recipe
+// router.post("/add", async (req, res) => {
+//   const { name, image, description } = req.body;
+//   try {
+//     const recipe = new Recipe({ name, image, description });
+//     await recipe.save();
+//     res.status(201).json(recipe);
+//   } catch (err) {
+//     res.status(400).json({ message: err.message });
+//   }
+// });
+
+// // Get all recipes
+// router.get("/", async (req, res) => {
+//   try {
+//     const recipes = await Recipe.find();
+//     res.json(recipes);
+//   } catch (err) {
+//     res.status(500).json({ message: err.message });
+//   }
+// });
+
+// module.exports = router;

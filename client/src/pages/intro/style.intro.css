@@ -1,0 +1,12 @@
+.intro-page {
+  background-image: url("red-background.png");
+  background-size: contain; /* Try using 'contain' instead of 'cover' */
+  background-repeat: no-repeat;
+  background-position: center center;
+  height: 80vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: max-content;
+}

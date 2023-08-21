@@ -1,23 +1,23 @@
-import logo from './logo.svg';
+import React, { useEffect, useRef, useState } from 'react';
+import { Outlet } from "react-router-dom";
+// import UserAuth from './context/user-authentication';
+// import ModalContext from './context/modals';
+// import Projects from './context/protfolio-data';
+// import LoginPortal from "./components/login-portal"
+import NavBar from "./components/navbar";
+// import Modals from './components/modals';
+// import Footer from "./components/footer";
 import './App.css';
 
 function App() {
+
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+        <NavBar />
+        <div className="page-content">
+          <Outlet />
+        </div>
+        {/* <Footer/> */}
     </div>
   );
 }

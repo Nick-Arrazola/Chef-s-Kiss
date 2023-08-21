@@ -5,7 +5,7 @@ const path = require('path');
 const { GridFsStorage } = require('multer-gridfs-storage');
 const imagesController = require("../../controllers/imagesController");
 
-const mongoURI = process.env.MONGODB_URI || "mongodb://localhost/chefskiss";
+const mongoURI = process.env.MONGODB_URI || "mongodb://0.0.0.0:27017/chefskiss";
 
 // Create storage engine
 const storage = new GridFsStorage({

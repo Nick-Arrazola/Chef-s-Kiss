@@ -2,12 +2,13 @@
   "name": "chefs-kiss-fullstack",
   "version": "1.0.0",
   "description": "social media app for sharing recipes",
-  "main": "index.js",
+  "main": "server.js",
   "scripts": {
     "start": "if-env NODE_ENV=production && npm run prod || npm run dev",
     "prod": "node server.js",
     "dev": "concurrently \"nodemon --ignore 'client/*'\" \"npm run client\"",
     "client": "cd client && npm start",
+    "dev-debug": "concurrently --kill-others \"nodemon --inspect --ignore 'client/*'\" \"npm run client\"",
     "seed": "node scripts/seedDB.js",
     "install": "cd client && npm install",
     "build": "cd client && npm run build"
@@ -39,5 +40,3 @@
     "nodemon": "^2.0.22"
   }
 }
-
-

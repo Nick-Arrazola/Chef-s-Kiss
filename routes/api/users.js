@@ -1,5 +1,6 @@
 const router = require("express").Router();
-const passport = require("../../config/passport");
+const authenticate = require("../../config/middleware/authenticate");
+// const passport = require("../../config/passport");
 const usersController = require("../../controllers/usersController");
 
 // Matches with "/api/signup" 
@@ -10,7 +11,7 @@ router.route("/signup/")
 // Matches with "/api/login"
 // POST: https//:www.chefskiss.com/api/users/login
 router.route("/login/")
-  .post(passport.authenticate("local"), usersController.login);
+  .post(authenticate, usersController.login);
 
 // Matches with "/api/:id"
 // GET: https//:www.chefskiss.com/api/users/:id
