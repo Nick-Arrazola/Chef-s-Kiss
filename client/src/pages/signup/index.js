@@ -4,11 +4,16 @@ import { Container, Row, Col, Form, Button } from "react-bootstrap";
 import api from "../../utils/api";
 
 const SignUp = () => {
+    const [realname, setRealname] = useState("");
     const [username, setUsername] = useState("");
     const [password, setPassword] = useState("");
     const [confirmPassword, setConfirmPassword] = useState("");
     
     const navigate = useNavigate();
+
+    const handleRealnameChange = (event) => {
+        setRealname(event.target.value);
+    }
 
     const handleUsernameChange = (event) => {
         setUsername(event.target.value);
@@ -32,6 +37,7 @@ const SignUp = () => {
         }
 
         const userData = {
+            "realname" : realname,
             "username": username,
             "password": password,
         }
@@ -56,6 +62,13 @@ const SignUp = () => {
             <Row className="mt-4">
                 <Col md={{ span: 6, offset: 3 }}>
                     <Form onSubmit={handleSubmit}>
+                        <Form.Group controlId="realname">
+                            <Form.Label><strong>Name</strong></Form.Label>
+                            <Form.Control type="text" value={realname} onChange={handleRealnameChange} />
+                        </Form.Group>
+                        <div>
+                            <p></p>
+                        </div>
                         <Form.Group controlId="username">
                             <Form.Label><strong>Username</strong></Form.Label>
                             <Form.Control type="text" value={username} onChange={handleUsernameChange} />

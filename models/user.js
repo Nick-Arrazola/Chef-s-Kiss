@@ -5,9 +5,11 @@ const Schema = mongoose.Schema;
 const SALT_WORK_FACTOR = 10;
 
 const UserSchema = new Schema({
+    realname: { type: String, required: true },
     username: { type: String, required: true, unique: true },
     password: { type: String, required: true },
-    recipes: { type: String }
+    recipes: { type: String },
+    profile: { type: String },
 }, { timestamps: { createdAt: 'created_at' } });
 
 // run this hash password hook prior to saving to database

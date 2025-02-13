@@ -19,15 +19,17 @@ const Post = () => {
       data: JSON.stringify(recipe),
     };
     api.createRecipe(body).then(res => {
-       console.log(res);
+       console.log(res);                                            //Delete Later
        navigate("/home");
      });
    };
 
   const uploadImage = (recipe, imageData) => {
+    console.log(recipe);                                            //Delete Later
+    console.log(imageData);                                         //Delete Later
     api.uploadImage(imageData)
     .then(res => {
-      console.log(res);
+      console.log(res);                                             //Delete Later
       recipe.image = res.data.files[0].filename;
       uploadRecipe(recipe);
     })

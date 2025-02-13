@@ -20,16 +20,23 @@ const root = ReactDOM.createRoot(document.getElementById('root'));
 const baseURL = process.env.PUBLIC_URL;
 const router = createBrowserRouter([
   {
+    // This is the only path element in the array, making '/' the root path of the website.
     path: '/',
+    // Specifying "App" component (from App.js) to be rendered when user hits the root path, AKA, '/' on Chef's Kiss.
     element: <App />,
     errorElement: <ErrorPage />,
+    // Listing all of the child paths of root, AKA, all of the possible pages a user will be able to go to in "Chef's Kiss".
+    // Since all of these paths are children of "App", they will all be rendered in where "<Outlet>" is, which is "App.js".
     children: [
-      // This is the Intro page, set as the default page
+      // "Intro" page. Set as the default page where user goes to once site first loads, user hits the "/" route, "App" component is rendered, then <Outlet> is reached.
+      // <Outlet> will render the "<Intro>" component because user did not specify any child route, only specified '/'.
       {
+        // Making "Intro" page the "index" route. 
+        // "index" = default component that is rendered when user reaches "/"; the root path (App)
         index: true,
         element: <Intro />,
       },
-      // The Login page
+      // "Login" page
       {
         path: 'login',
         element: <LoginPage />,
@@ -73,4 +80,3 @@ root.render(
 );
 
 reportWebVitals();
-

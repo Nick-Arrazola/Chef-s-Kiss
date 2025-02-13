@@ -3,6 +3,8 @@ import { Link, useNavigate } from "react-router-dom";
 import { Container, Row, Col, Form, Button, Card } from "react-bootstrap";
 import api from "../../utils/api";
 import './style.css';
+import { useContext } from "react";
+import { UserContext } from "./../../UserContext" 
 
 const LoginForm = () => {
     const [username, setUsername] = useState("");
@@ -11,6 +13,9 @@ const LoginForm = () => {
         username: null,
         password: null,
     });
+
+    //getting the "setUser" that is provided from "UserContext"
+    const { setUser } = useContext(UserContext);
     
     const navigate = useNavigate();
 
@@ -25,8 +30,8 @@ const LoginForm = () => {
     const handleSubmit = (event) => {
         event.preventDefault();
         // Here you can add your login logic, e.g., API call
-        console.log("Username:", username);
-        console.log("Password:", password);
+        console.log("Username:", username);                                       //Delete Later
+        console.log("Password:", password);                                       //Delete Later
 
         const userData = {
             "username": username,
@@ -35,9 +40,11 @@ const LoginForm = () => {
         api.userLogIn(userData)
         .then(response => {
             if (response.status === 200) {
+                //Setting context to store "response.data" so that every child component of "App.js" can access "Username"
+                setUser(response.data);
                 navigate("/home");
             } else {
-                // Handle other status codes if needed
+                console.log("Account does not exist");
             }
         })
         .catch(err => {

@@ -1,50 +1,7 @@
-// import React, { useState, useEffect } from "react";
-// import './style.css';
-
-// const Profile = () => {
-//   const [profilePicture, setProfilePicture] = useState('');
-
-//   useEffect(() => {
-//     const savedProfilePicture = localStorage.getItem('profilePicture');
-//     if (savedProfilePicture) {
-//       setProfilePicture(savedProfilePicture);
-//     }
-//   }, []);
-
-//   const handleImageUpload = (event) => {
-//     const file = event.target.files[0];
-//     if (file) {
-//       const reader = new FileReader();
-//       reader.addEventListener('load', () => {
-//         const imageData = reader.result;
-//         localStorage.setItem('profilePicture', imageData);
-//         setProfilePicture(imageData);
-//       });
-//       reader.readAsDataURL(file);
-//     }
-//   };
-
-//   return (
-//     <div>
-//       <div id="placeholderContainer">
-//         {profilePicture ? (
-//           <img id="placeholderImage" src={profilePicture} alt="Profile Picture" />
-//         ) : (
-//           <div>No profile picture selected</div>
-//         )}
-//       </div>
-
-//       <input type="file" id="uploadInput" onChange={handleImageUpload} />
-//       {/* <button id="uploadButton">Upload Picture</button> */}
-//     </div>
-//   );
-// }
-
-// export default Profile;
-
 import React from "react";
 import { Container, Row, Col, Image, Button } from "react-bootstrap";
 import { Link } from "react-router-dom";
+import './style.css'; // Import the CSS file
 
 const Profile = () => {
     const user = {
@@ -55,7 +12,7 @@ const Profile = () => {
     };
 
     return (
-        <Container className="my-5">
+        <Container className="my-5 background" style={{padding: "30px"}}>
             <Row>
                 <Col md={4} className="text-center">
                     <Image src={user.profileImage} roundedCircle style={{ width: "200px", border: "5px solid #fff" }} />

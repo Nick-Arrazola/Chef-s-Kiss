@@ -36,13 +36,14 @@ const LoginPage = () => {
                 </Link>
                 <p><strong>Don't have an account? Sign up!</strong></p>
                 </Col>
-                <Col>
+                {/* <Col>
                 <NavLink to="/home">
                     <Button variant="warning" size="lg">
-                    Bypass
+                    Continue as guest
                     </Button>
                 </NavLink>
-                </Col>
+                <p><strong>Straight to the action but no access to features</strong></p>
+                </Col> */}
             </Row>
         </Container>
     );
