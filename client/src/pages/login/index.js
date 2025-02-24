@@ -30,8 +30,8 @@ const LoginForm = () => {
     const handleSubmit = (event) => {
         event.preventDefault();
         // Here you can add your login logic, e.g., API call
-        console.log("Username:", username);                                       //Delete Later
-        console.log("Password:", password);                                       //Delete Later
+        console.log("Username:", username);                                       //!Delete Later
+        console.log("Password:", password);                                       //!Delete Later
 
         const userData = {
             "username": username,
@@ -40,10 +40,11 @@ const LoginForm = () => {
         api.userLogIn(userData)
         .then(response => {
             if (response.status === 200) {
-                console.log("User data received from backend:", response.data);                                                 //Delete Later
+                console.log("User data received from backend:", response.data);                                                 //!Delete Later
                 //Setting context to store "response.data" so that every child component of "App.js" can access "Username"
+                //"response.data" is the whole user schema object returned, which also includes user's "ID"
                 setUser(response.data);
-                console.log("UserContext updated:", response.data);                                                             //Delete Later
+                console.log("UserContext updated:", response.data);                                                             //!Delete Later
                 navigate("/home");
             } else {
                 console.log("Account does not exist");

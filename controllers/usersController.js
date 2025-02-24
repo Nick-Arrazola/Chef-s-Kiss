@@ -35,7 +35,10 @@ module.exports = {
       })
       .catch(err => res.status(422).json(err));
   },
+  //Takes in user body (req.body) consisting of new info and updates the old user info
   update: function(req, res) {
+    //Finding user's info by using the user's "id". If they are found, then entire user will be updated with the new user (req.body)
+    //"req.body" is "UserSchema" in "models/user.js"
     db.User.findOneAndUpdate({ _id: req.params.id }, req.body)
       .then(dbModel => res.json(dbModel))
       .catch(err => res.status(422).json(err));

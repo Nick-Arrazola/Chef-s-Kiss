@@ -3,33 +3,39 @@ import React, { useState } from "react";
 import Button from "react-bootstrap/Button";
 import { NavLink, useNavigate } from "react-router-dom";
 import api from "../../utils/api";
-import './style.css'; // Import the CSS file
+import './style.css';
+import { useContext } from "react";
+import { UserContext } from "../../UserContext";
 
 const Post = () => {
   const [recipeName, setRecipeName] = useState("");
   const [recipeImage, setRecipeImage] = useState(false);
   const [recipeDescription, setRecipeDescription] = useState("");
+  //Getting the currently logged in user's info from "UserContext"
+  const { user }  = useContext(UserContext);
 
   const navigate = useNavigate();
 
   // Send a POST request to the backend API to store the recipe data.
   const uploadRecipe = (recipe) => {
     const body = {
+      //Placing the currently logged in user's ID here so that viewers can know WHO made this recipe
+      userID: user._id,
       name: recipe.name, 
       data: JSON.stringify(recipe),
     };
     api.createRecipe(body).then(res => {
-       console.log(res);                                            //Delete Later
+       console.log(res);                                            //!Delete Later
        navigate("/home");
      });
    };
 
   const uploadImage = (recipe, imageData) => {
-    console.log(recipe);                                            //Delete Later
-    console.log(imageData);                                         //Delete Later
+    console.log(recipe);                                            //!Delete Later
+    console.log(imageData);                                         //!Delete Later
     api.uploadImage(imageData)
     .then(res => {
-      console.log(res);                                             //Delete Later
+      console.log(res);                                             //!Delete Later
       recipe.image = res.data.files[0].filename;
       uploadRecipe(recipe);
     })
@@ -41,10 +47,17 @@ const Post = () => {
   
   const handleUpload = (event) => {
     event.preventDefault();
+
+    if (!user) {
+      alert("You must be logged in to post a recipe");
+      return;
+    } 
+
     const payload = {
       name: recipeName,
       image: recipeImage,
       description: recipeDescription,
+      // user: user._id,
     };
     if (recipeImage) {
       const imageFile = new FormData();
