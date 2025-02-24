@@ -7,6 +7,8 @@ const api =  {
   userLogIn: (userData) => axios.post("/api/users/login", userData),
   // Used to save any changes of user's info saved on mongo
   updateUser: (id, userData) => axios.put(`/api/users/${id}`, userData),
+  // Getting user info attached to the given ID
+  getUserById: (id) => axios.get("/api/users/" + id),
   // Saves a post to the database - not tested
   saveData: (id, userData) => axios.post("/api/" + id, userData),
   // deletes user account

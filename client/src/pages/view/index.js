@@ -7,40 +7,48 @@ import Comments from "../../components/comments"; // Import the Comments compone
 
 const View = () => {
   const [recipe, setRecipe] = useState(null);
-  const [likes, setLikes] = useState(0); // State for the likes count
-  const [hasLiked, setHasLiked] = useState(false); // State to track whether the user has liked
-  // const [comments, setComments] = useState([]); // Set an empty array as default value for comments
+  const [username, setUsername] = useState(""); // State to store the username
+  const [likes, setLikes] = useState(0);
+  const [hasLiked, setHasLiked] = useState(false);
 
   const { id } = useParams();
   const defaultImage = "https://tse3.mm.bing.net/th?id=OIP.1LE1ubiBi3zlk7L-9tZFYAHaGw&pid=Api&P=0&h=180";
 
   useEffect(() => {
+    // Fetch the recipe first
     api.getRecipeById(id)
       .then((res) => {
-        // creating object that includes the item's id and the parsed info of res.data
+        
         const data = {
           _id: res._id,
-          ...JSON.parse(res.data.data)
+          ...JSON.parse(res.data.data),
+          //todo, this is returning undefined. Check backend and how it actually works. Get this working so that we can use the userID to display the user's username.
+              userID: res.userID // Extract userID from the recipe
         };
 
-        // use the data object to set it as the recipe
+        console.log(data);                                          //!Delete Later 
+
         setRecipe(data);
+
+        // Fetch the username based on userID
+        if (data.userID) {
+          api.getUserById(data.userID)
+            .then((userRes) => {
+              setUsername(userRes.username || "Unknown Chef");
+            })
+            .catch((error) => console.error("Error fetching username:", error));
+        }
       })
       .catch((error) => console.error("Error fetching recipe:", error));
   }, [id]);
 
-  const buildURL = (filename) => {
-    return `/api/images/${filename}`;
-  };
+  const buildURL = (filename) => `/api/images/${filename}`;
 
   const handleLike = () => {
-    // Send a POST request to the backend to increment likes
     api.incrementLikes(id)
       .then(() => {
-        // Fetch the updated likes count from the backend
         api.getLikesCount(id)
           .then((res) => {
-            // Update the local likes count and hasLiked state
             setLikes(res.likes);
             setHasLiked(true);
           })
@@ -49,29 +57,8 @@ const View = () => {
       .catch((error) => console.error("Error incrementing likes:", error));
   };
 
-  // const handleCommentSubmit = (comment) => {
-  //   // Add the comment to the backend
-  //   api.addComment(id, comment)
-  //     .then(() => {
-  //       // Reload the recipe with the updated comment
-  //       api.getRecipeById(id)
-  //         .then((res) => {
-  //           const data = {
-  //             _id: res._id,
-  //             ...JSON.parse(res.data.data),
-  //           };
-
-  //           setRecipe(data);
-  //           setComments(data.comments);
-  //         })
-  //         .catch((error) => console.error('Error fetching recipe:', error));
-  //     })
-  //     .catch((error) => console.error('Error adding comment:', error));
-  // };
-
   return (
     <Container className="my-5">
-      {/* Checking if recipe is actually true */}
       {recipe ? (
         <div>
           <Row>
@@ -80,6 +67,9 @@ const View = () => {
               <Card className="shadow-lg mb-4">
                 <Card.Body>
                   <Card.Title><strong>Name:</strong> {recipe.name}</Card.Title>
+                  <Card.Text>
+                    <em>Recipe prepared by: {username}</em> {/* Display username */}
+                  </Card.Text>
                   <Card.Img variant="top" src={recipe.image ? buildURL(recipe.image) : defaultImage} alt={recipe.name} style={{ maxWidth: '100%' }} />
                 </Card.Body>
               </Card>
@@ -91,7 +81,6 @@ const View = () => {
                 <Card.Body>
                   <Card.Title><strong>Instructions:</strong></Card.Title>
                   <Card.Text style={{ whiteSpace: 'pre-line' }}>{recipe.description}</Card.Text>
-                  {/* "Like" button */}
                   <Button variant="primary" onClick={handleLike} disabled={hasLiked}>
                     {hasLiked ? "Kissed" : "Kiss"} ({likes})
                   </Button>
@@ -100,14 +89,10 @@ const View = () => {
             </Col>
           </Row>
 
-          {/* <Comments comments={recipe.comments} onCommentSubmit={handleCommentSubmit} /> */}
-
           {/* Button to go back to the home page */}
           <div className="text-center mt-4">
             <NavLink to="/home">
-              <Button variant="warning">
-                Back
-              </Button>{' '}
+              <Button variant="warning">Back</Button>{' '}
             </NavLink>
           </div>
         </div>
