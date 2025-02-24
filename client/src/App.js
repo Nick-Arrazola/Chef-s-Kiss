@@ -19,19 +19,17 @@ function App() {
 
   return (
     // Wrapping "Navbar" and "App"s children (i.e outlet) inside "UserProvider" to make user data is accessible globally
-    <UserProvider>
-      <div className="App">
-          {/*The NavBar component is only rendered on the webpage IF and ONLY IF "hideNavBar" is false
-          meaning if the user is not in the Intro page*/}
-          {!hideNavBar && <NavBar/>} {/*This line will run only if both sides are true. <NavBar> is always true, so depends on "hideNavBar"*/}
-          <div className="page-content">
-              <Outlet />
-            {/* The <Outlet> tag will render the child route components of the parent route, which in this case is this page's component, "<App>".
-            "<App>" is defined as the root route in "src/index.js" */}
-          </div>
-          {/* <Footer/> */}
-      </div>
-    </UserProvider>
+    <div className="App">
+        {/*The NavBar component is only rendered on the webpage IF and ONLY IF "hideNavBar" is false
+        meaning if the user is not in the Intro page*/}
+        {!hideNavBar && <NavBar/>} {/*This line will run only if both sides are true. <NavBar> is always true, so depends on "hideNavBar"*/}
+        <div className="page-content">
+            <Outlet />
+          {/* The <Outlet> tag will render the child route components of the parent route, which in this case is this page's component, "<App>".
+          "<App>" is defined as the root route in "src/index.js" */}
+        </div>
+        {/* <Footer/> */}
+    </div>
   );
 }
 

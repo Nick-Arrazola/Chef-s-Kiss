@@ -8,8 +8,11 @@ const UserSchema = new Schema({
     realname: { type: String, required: true },
     username: { type: String, required: true, unique: true },
     password: { type: String, required: true },
-    recipes: { type: String },
-    profile: { type: String },
+    userInfo: {
+        aboutMe: { type: String, default: "" },
+        contact: { type: String, default: "" },
+        recipes: { type: String, default: "" },
+    }
 }, { timestamps: { createdAt: 'created_at' } });
 
 // run this hash password hook prior to saving to database

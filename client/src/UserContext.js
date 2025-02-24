@@ -15,6 +15,9 @@ export function UserProvider ({children}) {
     // `setUser` is a function that will allow us to update the `user` state
     const [user, setUser] = useState(null); // Initially, the user is `null` (not logged in)
 
+    console.log("In UserContext");                                                                    // !Delete Later
+    console.log(user);                                                                                // !Delete Later
+
     return (
         // The `UserContext.Provider` component makes "user" and "setUser" available 
         // to any component that needs it inside the application.

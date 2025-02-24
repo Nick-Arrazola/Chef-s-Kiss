@@ -15,6 +15,7 @@ import View from './pages/view';
 import SignUp from './pages/signup';
 import reportWebVitals from './reportWebVitals';
 import 'bootstrap/dist/css/bootstrap.min.css';
+import { UserProvider } from './UserContext'; 
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 const baseURL = process.env.PUBLIC_URL;
@@ -75,7 +76,9 @@ const router = createBrowserRouter([
 
 root.render(
   <React.StrictMode>
-    <RouterProvider router={router} />
+    <UserProvider>
+      <RouterProvider router={router} />
+    </UserProvider>
   </React.StrictMode>
 );
 

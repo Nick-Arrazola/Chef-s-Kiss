@@ -5,6 +5,8 @@ const api =  {
   userSignUp: (userData) => axios.post("/api/users/signup", userData),
   // hash password and register user in database
   userLogIn: (userData) => axios.post("/api/users/login", userData),
+  // Used to save any changes of user's info saved on mongo
+  updateUser: (id, userData) => axios.put(`/api/users/${id}`, userData),
   // Saves a post to the database - not tested
   saveData: (id, userData) => axios.post("/api/" + id, userData),
   // deletes user account

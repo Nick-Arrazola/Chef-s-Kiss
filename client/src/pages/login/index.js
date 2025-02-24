@@ -40,8 +40,10 @@ const LoginForm = () => {
         api.userLogIn(userData)
         .then(response => {
             if (response.status === 200) {
+                console.log("User data received from backend:", response.data);                                                 //Delete Later
                 //Setting context to store "response.data" so that every child component of "App.js" can access "Username"
                 setUser(response.data);
+                console.log("UserContext updated:", response.data);                                                             //Delete Later
                 navigate("/home");
             } else {
                 console.log("Account does not exist");
