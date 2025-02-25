@@ -13,28 +13,39 @@ const View = () => {
 
   const { id } = useParams();
   const defaultImage = "https://tse3.mm.bing.net/th?id=OIP.1LE1ubiBi3zlk7L-9tZFYAHaGw&pid=Api&P=0&h=180";
-
   useEffect(() => {
     // Fetch the recipe first
     api.getRecipeById(id)
       .then((res) => {
+        console.log("Raw API Response:", res.data); // Debugging
+  
+        let parsedData;
         
-        const data = {
-          _id: res._id,
-          ...JSON.parse(res.data.data),
-          //todo, this is returning undefined. Check backend and how it actually works. Get this working so that we can use the userID to display the user's username.
-              userID: res.userID // Extract userID from the recipe
+        try {
+          parsedData = JSON.parse(res.data.data); // Ensure it's an object
+        } catch (error) {
+          console.error("Error parsing recipe data:", error);
+          return;
+        }
+  
+        console.log("Parsed Data:", parsedData); // Debugging
+  
+        const recipeData = {
+          _id: res.data._id,
+          name: res.data.name,
+          description: parsedData.description, // Now safely accessing description
+          image: parsedData.image || null, // Extract the image from the data field
+          userID: parsedData.user, // Extract userID from the data field
         };
-
-        console.log(data);                                          //!Delete Later 
-
-        setRecipe(data);
-
+  
+        setRecipe(recipeData);
+  
         // Fetch the username based on userID
-        if (data.userID) {
-          api.getUserById(data.userID)
+        if (recipeData.userID) {
+          api.getUserById(recipeData.userID)
             .then((userRes) => {
-              setUsername(userRes.username || "Unknown Chef");
+              console.log("User Response:", userRes); // Debugging
+              setUsername(userRes.data.username || "Unknown Chef");
             })
             .catch((error) => console.error("Error fetching username:", error));
         }
@@ -49,7 +60,7 @@ const View = () => {
       .then(() => {
         api.getLikesCount(id)
           .then((res) => {
-            setLikes(res.likes);
+            setLikes(res.data.likes);
             setHasLiked(true);
           })
           .catch((error) => console.error("Error fetching likes count:", error));

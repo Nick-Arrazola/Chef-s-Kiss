@@ -19,11 +19,10 @@ const Post = () => {
   // Send a POST request to the backend API to store the recipe data.
   const uploadRecipe = (recipe) => {
     const body = {
-      //Placing the currently logged in user's ID here so that viewers can know WHO made this recipe
-      userID: user._id,
       name: recipe.name, 
       data: JSON.stringify(recipe),
     };
+
     api.createRecipe(body).then(res => {
        console.log(res);                                            //!Delete Later
        navigate("/home");
@@ -57,7 +56,8 @@ const Post = () => {
       name: recipeName,
       image: recipeImage,
       description: recipeDescription,
-      // user: user._id,
+      //Placing the currently logged in user's ID here so that viewers can know WHO made this recipe
+      user: user._id,
     };
     if (recipeImage) {
       const imageFile = new FormData();
