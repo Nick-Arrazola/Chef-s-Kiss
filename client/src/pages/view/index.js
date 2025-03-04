@@ -5,6 +5,8 @@ import { Card, Col, Container, Row } from 'react-bootstrap';
 import api from '../../utils/api';
 import Comments from "../../components/comments"; // Import the Comments component
 
+
+// TODO Comment up how all of this works, so that we can better understand
 const View = () => {
   const [recipe, setRecipe] = useState(null);
   const [username, setUsername] = useState(""); // State to store the username
@@ -79,7 +81,12 @@ const View = () => {
                 <Card.Body>
                   <Card.Title><strong>Name:</strong> {recipe.name}</Card.Title>
                   <Card.Text>
-                    <em>Recipe prepared by: {username}</em> {/* Display username */}
+                    <em>
+                      Recipe prepared by: 
+                      <NavLink to={`/uploader/${recipe.userID}`} className="text-primary" style={{ cursor: 'pointer', textDecoration: 'underline' }}>
+                          {username}
+                      </NavLink>
+                    </em> {/* Display username */}
                   </Card.Text>
                   <Card.Img variant="top" src={recipe.image ? buildURL(recipe.image) : defaultImage} alt={recipe.name} style={{ maxWidth: '100%' }} />
                 </Card.Body>

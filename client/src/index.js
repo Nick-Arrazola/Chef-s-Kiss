@@ -13,6 +13,7 @@ import Collection from './pages/collection';
 import Post from './pages/post';
 import View from './pages/view';
 import SignUp from './pages/signup';
+import UploaderProfile from './pages/uploaderProfile';
 import reportWebVitals from './reportWebVitals';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { UserProvider } from './UserContext'; 
@@ -69,6 +70,10 @@ const router = createBrowserRouter([
       {
         path: 'view-recipe/:id',
         element: <View />,
+      },
+      {
+        path: 'uploader/:userID',
+        element: <UploaderProfile />,
       },
     ],
   },
