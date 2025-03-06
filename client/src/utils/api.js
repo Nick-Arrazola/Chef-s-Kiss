@@ -30,10 +30,8 @@ const api =  {
   // add comments to recipe page
   addComment: (id, comment) => axios.post(`/api/recipes/${id}/comments`, { comment }),
   //increment likes for a recipe
-  incrementLikes: (id) => axios.post(`/api/recipes/${id}/incrementLikes`),
-  // incrementLikes: (id) => axios.post("/api/recipes/likes" + id), can this work as well????
-  //get the current like count of recipe
-  getLikesCount: (id) => axios.get(`/api/recipes/${id}/getLikeCount`)
+  // TODO having trouble incrementing likes. Look into. Could be that im calling it wrong with "put" or something.
+  incrementLikes: (id) => axios.put("/api/recipes/" + id),
 };
 
 export default api;

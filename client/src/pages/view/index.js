@@ -40,6 +40,7 @@ const View = () => {
           userID: parsedData.user, // Extract userID from the data field
         };
   
+        setLikes(res.data.likes);
         setRecipe(recipeData);
   
         // Fetch the username based on userID
@@ -59,13 +60,9 @@ const View = () => {
 
   const handleLike = () => {
     api.incrementLikes(id)
-      .then(() => {
-        api.getLikesCount(id)
-          .then((res) => {
-            setLikes(res.data.likes);
-            setHasLiked(true);
-          })
-          .catch((error) => console.error("Error fetching likes count:", error));
+      .then((res) => {
+        setLikes(res.data.likes);  // Directly updating likes from the response
+        setHasLiked(true);
       })
       .catch((error) => console.error("Error incrementing likes:", error));
   };
