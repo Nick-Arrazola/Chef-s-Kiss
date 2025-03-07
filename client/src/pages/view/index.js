@@ -1,9 +1,10 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useContext } from 'react';
 import { useParams, NavLink } from 'react-router-dom';
 import Button from 'react-bootstrap/Button';
 import { Card, Col, Container, Row } from 'react-bootstrap';
 import api from '../../utils/api';
 import Comments from "../../components/comments"; // Import the Comments component
+import { UserContext } from '../../UserContext';
 
 
 // TODO Comment up how all of this works, so that we can better understand
@@ -12,9 +13,10 @@ const View = () => {
   const [username, setUsername] = useState(""); // State to store the username
   const [likes, setLikes] = useState(0);
   const [hasLiked, setHasLiked] = useState(false);
-
+  const {user, setUser} = useContext(UserContext);
   const { id } = useParams();
   const defaultImage = "https://tse3.mm.bing.net/th?id=OIP.1LE1ubiBi3zlk7L-9tZFYAHaGw&pid=Api&P=0&h=180";
+
   useEffect(() => {
     // Fetch the recipe first
     api.getRecipeById(id)
@@ -54,15 +56,45 @@ const View = () => {
         }
       })
       .catch((error) => console.error("Error fetching recipe:", error));
-  }, [id]);
+
+    //Checking if current logged-in user has liked this recipe before
+    if (user?.userInfo?.likedRecipes?.includes(id)) {
+      setHasLiked(true);
+    }
+  }, [id, user]);
+
+  
 
   const buildURL = (filename) => `/api/images/${filename}`;
 
   const handleLike = () => {
+    if (!user) {
+      console.error("User not found");
+      return;
+    }
+
+    //TODO working on this. Trying to make it so recipe ID saves to user's recipe's liked list. Having trouble making it work. 
     api.incrementLikes(id)
       .then((res) => {
-        setLikes(res.data.likes);  // Directly updating likes from the response
+        setLikes(res.data.likes);  // Update UI immediately
         setHasLiked(true);
+
+        // Update the user's likedRecipes array in context
+        const updatedUser = {
+          ...user,
+          userInfo: {
+            ...user.userInfo,
+            likedRecipes: [...user.userInfo.likedRecipes, id] // Add recipe ID
+          }
+        };
+
+        //Recipe is being saved into the UpdatedUser object
+        console.log(updatedUser);                                                                    //!Delete Later
+
+        setUser(updatedUser); // Update context
+
+        //! Problem is most likely coming from here since it UserContext is saving the recipe but the backend isn't
+        api.updateUser(user._id, updatedUser); // Saving updated user with newly liked recipe to backend
       })
       .catch((error) => console.error("Error incrementing likes:", error));
   };
@@ -96,6 +128,8 @@ const View = () => {
                 <Card.Body>
                   <Card.Title><strong>Instructions:</strong></Card.Title>
                   <Card.Text style={{ whiteSpace: 'pre-line' }}>{recipe.description}</Card.Text>
+                  {/* When "kiss" button is clicked, the function "handleLike" is called and "hasLiked" variable is change to display "kissed". 
+                    The button is also dissable so we cannot further like the recipe, since it should be one like per user per recipe.*/}
                   <Button variant="primary" onClick={handleLike} disabled={hasLiked}>
                     {hasLiked ? "Kissed" : "Kiss"} ({likes})
                   </Button>

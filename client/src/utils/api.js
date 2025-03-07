@@ -30,7 +30,7 @@ const api =  {
   // add comments to recipe page
   addComment: (id, comment) => axios.post(`/api/recipes/${id}/comments`, { comment }),
   //increment likes for a recipe
-  // TODO having trouble incrementing likes. Look into. Could be that im calling it wrong with "put" or something.
+  // TODO comment on how this works so that I can remember and understand better.
   incrementLikes: (id) => axios.put("/api/recipes/" + id),
 };
 

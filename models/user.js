@@ -12,6 +12,7 @@ const UserSchema = new Schema({
         aboutMe: { type: String, default: "" },
         contact: { type: String, default: "" },
         recipes: { type: String, default: "" },
+        likedRecipes: { type: [String], default: [] },
     }
 }, { timestamps: { createdAt: 'created_at' } });
 

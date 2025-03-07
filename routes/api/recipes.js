@@ -7,7 +7,7 @@ router.route("/")
     .post(recipesController.create);
 
 // Matches with "/api/recipe/:id"
-// TODO having trouble incrementing likes. Look into. Could be that im calling it wrong with "put" or something.
+// TODO comment on how this works so that I better understand and remember
 router.route("/:id")
     .get(recipesController.findById)
     //was ".put" before
